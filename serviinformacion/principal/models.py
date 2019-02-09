@@ -1,9 +1,7 @@
 from django.db import models
 
-# Create your models here.
-#cuando ejecutamos el comando en la consola para verificar la conexion con Mysql entonces
-#este no arrojara un listado deacuerdo a como va en django las clases de nuestros modelos 
-# el comando es el siguiente, python manage.py inspectdb.
+# creamos los modelos correspondientes a las bases de datos para poder extraerlos simplemente
+#ejecutamos el comando python manage.py inspectdb
 class AccesoControl(models.Model):
     nit_acceso = models.CharField(primary_key=True, max_length=20)
     nombre_personal = models.CharField(max_length=20)
@@ -25,6 +23,15 @@ class Departamentos(models.Model):
     class Meta:
         managed = False
         db_table = 'departamentos'
+
+
+class MesaJurado(models.Model):
+    id_mesa = models.AutoField(primary_key=True)
+    nombre_mesa = models.CharField(max_length=20, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'mesa_jurado'
 
 
 class Municipio(models.Model):
@@ -55,14 +62,9 @@ class UsuariosVotos(models.Model):
     id_dep = models.ForeignKey(Departamentos, models.DO_NOTHING, db_column='id_dep')
     nit_acceso = models.ForeignKey(AccesoControl, models.DO_NOTHING, db_column='nit_acceso')
     fecha_registro = models.DateField()
+    id_mesa = models.IntegerField()
 
     class Meta:
         managed = False
         db_table = 'usuarios_votos'
-
-
-
-
-    
-
 
